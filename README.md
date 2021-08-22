@@ -1,2 +1,2 @@
-# image-utils
+# image-toolbox
 Image processing utilities
