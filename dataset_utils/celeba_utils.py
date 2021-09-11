@@ -38,6 +38,7 @@ def celeba_split_from_file(data_path, split_txt_path):
         src_path = os.path.join(data_path, image_name)
 
         if not os.path.exists(src_path):
+            print("File not found", src_path)
             continue
 
         dst_path = os.path.join(data_path, split)
@@ -81,6 +82,7 @@ def celeba_save_images_in_folders(data_path, label_txt_path, map=None):
             dst_url_dir = os.path.join(data_path, str(label))
 
         if not os.path.exists(src_url):
+            print("Image", src_url, "not found")
             continue
 
         if not os.path.exists(dst_url_dir):
