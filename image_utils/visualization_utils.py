@@ -20,7 +20,7 @@ def visualize_samples(imgs_path, gray=False, n_cols=5, n_rows=1):
 def visualize_torch_batch(images, gray=False, n_cols=5, n_rows=1, caption=""):
     """Visualize a batch of images of type torch tensor"""
 
-    fig = plt.figure(figsize = (3*n_cols,3*n_rows))
+    fig = plt.figure(figsize=(3*n_cols,3*n_rows))
     for i in range(n_cols*n_rows):
         plt.subplot(n_rows,n_cols,i+1)
         plt.axis('off')
