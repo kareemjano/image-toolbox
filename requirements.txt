@@ -1,9 +1,8 @@
 numpy
 matplotlib
 torch
-torchvision
-pytorch_lightning
 facenet_pytorch
 imgaug
 scikit-learn
 pretrainedmodels
+opencv-contrib-python-headless

@@ -1,6 +1,5 @@
 import numpy as np
 from ..image_utils.face_utils import image_deep_alignment
-from PIL import Image
 
 class FaceAlignTransform(object):
     """
