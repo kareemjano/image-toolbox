@@ -77,8 +77,10 @@ class ClassificationModule(pl.LightningModule, ABC):
         logger = False if mode == 'test' else True
         avg_loss = torch.stack([x['loss'] for x in outputs]).mean()
         avg_acc = torch.stack([x['n_correct'] for x in outputs]).mean()
-        self.log(f'{mode}_loss', avg_loss, logger=logger)
-        self.log(f'{mode}_acc', avg_acc, logger=logger)
+
+        if logger and self.logger is not None:
+            self.logger.experiment.add_scalar(f'{mode}/{mode}_loss', avg_loss, self.current_epoch)
+            self.logger.experiment.add_scalar(f'{mode}/{mode}_acc', avg_acc, self.current_epoch)
         return avg_loss, avg_acc
 
     def training_epoch_end(self, outputs):
