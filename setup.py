@@ -5,7 +5,7 @@ with open("requirements.txt", 'r') as file:
 
 setup(
     name = "image_toolbox",
-    version = "0.0.2",
+    version = "0.2",
     author = "Kareem Janou",
     description = ("Collection of usefull tools, that can make the developement of neural networks easier."),
     license = "BSD",
