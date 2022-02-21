@@ -18,7 +18,7 @@ class ClassificationModule(pl.LightningModule, ABC):
         self.net_params = cfg.nets[self.model_select]
         self.model_params = self.net_params.params
         self.hparam = self.net_params.hparams
-        self.cm = ConfusionMatrix(num_classes=self.dataset_cfg.n_segments) #, normalize="true")
+        self.cm = ConfusionMatrix(num_classes=self.dataset_cfg.n_classes) #, normalize="true")
         # CNN
         self.input_shape = tuple(self.model_params["input_shape"])
 
@@ -44,7 +44,7 @@ class ClassificationModule(pl.LightningModule, ABC):
         return (y_hat == y).sum() / y.size(0)
 
     def general_step(self, batch, mode):
-        x, y, _ = batch
+        x, y = batch
         output = self(x)
 
         loss = nn.CrossEntropyLoss()(output, y)
@@ -79,8 +79,8 @@ class ClassificationModule(pl.LightningModule, ABC):
         avg_acc = torch.stack([x['n_correct'] for x in outputs]).mean()
 
         if logger and self.logger is not None:
-            self.logger.experiment.add_scalar(f'{mode}/{mode}_loss', avg_loss, self.current_epoch)
-            self.logger.experiment.add_scalar(f'{mode}/{mode}_acc', avg_acc, self.current_epoch)
+            self.log(f'{mode}/{mode}_loss', avg_loss, on_epoch=True)
+            self.log(f'{mode}/{mode}_acc', avg_acc, on_epoch=True)
         return avg_loss, avg_acc
 
     def training_epoch_end(self, outputs):

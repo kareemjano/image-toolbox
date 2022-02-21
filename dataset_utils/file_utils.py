@@ -24,9 +24,10 @@ def download_file_from_google_drive(destination, full_url=None, id=None):
         response = session.get(URL, params = { 'id' : id }, stream = True)
         token = get_confirm_token(response)
 
-        if token:
+        while token is not None:
             params = { 'id' : id, 'confirm' : token }
             response = session.get(URL, params = params, stream = True)
+            token = get_confirm_token(response)
 
         save_response_content(response, destination)
     else:
@@ -35,7 +36,9 @@ def download_file_from_google_drive(destination, full_url=None, id=None):
             f.write(r.content)
 
 def get_confirm_token(response):
+    print(response.cookies.items())
     for key, value in response.cookies.items():
+        print("print key", key)
         if key.startswith('download_warning'):
             return value
 
